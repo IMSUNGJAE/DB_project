@@ -26,25 +26,29 @@ public class Db_connection{
 
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
-        con =DriverManager.getConnection("jdbc:mysql://192.168.56.101:3308/crimedb","dksroch","dlatjdwO123!");
+        con =DriverManager.getConnection("jdbc:mysql://192.168.56.101:3308/crimedb" + "","dksroch","dlatjdwO123!");
 
         
  
-    	Scanner scan = new Scanner(System.in,"euc-kr");
+    	Scanner scan = new Scanner(System.in);
     	
-    	
-    	System.out.print("1.입력 2.수정.3.검색 4.삭제 :");
+    		
+    	System.out.print("1.입력  2.수정  3.검색  4.삭제  \n");
+        System.out.print("------------------------------------------\n");
+        System.out.print("5.테이블 보기 6.교도소 정보 보기 7.전체 현황 \n");
+        
+        System.out.print("입력: ");
     	int num = Integer.parseInt(scan.nextLine());
-    	
     	
     	
     	
     	if(num==1) {
     		
-    	    System.out.println("수정항목: 1번 Criminal / 2번 Manager / 3번 Prison ");
-    	    System.out.println("        4번 Prison_location / 5번 Works");
-    	    
-    	    int n = Integer.parseInt(scan.nextLine());
+    		System.out.println("==================================입력======================================");
+    	    System.out.println("1번 Criminal || 2번 Manager || 3번 Prison || 4번 Prison_location || 5번 Works");
+    	    System.out.println("===========================================================================");
+    	   
+            int n = Integer.parseInt(scan.nextLine());
     	  
     	    switch(n) {//
     		
@@ -72,12 +76,18 @@ public class Db_connection{
     		
     		System.out.print("M_id:");
     		int M_id = Integer.parseInt(scan.nextLine());
+    		
+    		System.out.print("D_oi:");
+    		String D_oi= scan.nextLine();
+    		
+    		System.out.print("P_id:");
+    		int P_id1= Integer.parseInt(scan.nextLine());
     	
     	
     		stmt = con.createStatement();
     	
-    		r = stmt.executeUpdate("insert into Criminal" + "(C_id,Fname,Lname,Address,Gender,Kind,Period,M_id) value('"+
-    		C_id+"','" +Fname+"','"+Lname+"', '"+Address+"','"+Gender+"','"+Kind+"','"+Period+"','" +M_id+"')");
+    		r = stmt.executeUpdate("insert into Criminal" + "(C_id,Fname,Lname,Address,Gender,Kind,Period,M_id,D_oi,P_id) value('"+
+    		C_id+"','" +Fname+"','"+Lname+"', '"+Address+"','"+Gender+"','"+Kind+"','"+Period+"','" +M_id+"','"+D_oi+"','"+P_id1+"')");
     		
     		if(r==1) {
     			
@@ -100,12 +110,12 @@ public class Db_connection{
         		System.out.print("Name:");
         		String Name = scan.nextLine();
         	
-        		System.out.print("Kind:");
-        		String Kind2 = scan.nextLine();
+        		System.out.print("M_kind:");
+        		String M_kind = scan.nextLine();
         	
         	    stmt = con.createStatement();
         	
-        		r = stmt.executeUpdate("insert into Manage" + "(M_id,Name,Kind) value('"+M_id2+"','" +Name+"','"+Kind2+"')");
+        		r = stmt.executeUpdate("insert into Manager" + "(M_id,Name,M_kind) value('"+M_id2+"','" +Name+"','"+ M_kind+"')");
         		
         		if(r==1) {
         			
@@ -132,14 +142,19 @@ public class Db_connection{
         	
         		System.out.print("S_M_id:");
         		int S_M_id = Integer.parseInt(scan.nextLine());
-        	 
+        	    
+        		System.out.print("Re_number:");
+        		int Re_number = Integer.parseInt(scan.nextLine());
         		
-        	
-        	
+        		System.out.print("Tel:");
+        		String Tel = scan.nextLine();
+        		
+        		
+        		
         		stmt = con.createStatement();
         	
-        		r = stmt.executeUpdate("insert into Prison" + "(P_id,Name,In_number,S_M_id) value('"+
-        		P_id+"','" +Name2+"','"+In_number+"', '"+S_M_id+"')");
+        		r = stmt.executeUpdate("insert into Prison" + "(P_id,Name,In_number,S_M_id,Re_number,Tel) value('"+
+        		P_id+"','" +Name2+"','"+In_number+"', '"+S_M_id+"','"+Re_number+"','"+Tel+"')");
         		
         		if(r==1) {
         			
@@ -157,17 +172,20 @@ public class Db_connection{
     	    case 4:
         	    System.out.print("P_id:");
         		int P_id2 = Integer.parseInt(scan.nextLine());
+        		
+        		System.out.print("Name:");
+        		String Name1 = scan.nextLine();
         	
         		System.out.print("Prison_location:");
-        		String Prison_location = scan.nextLine();
+        		String P_location = scan.nextLine();
         	
         		
         	
         	
         		stmt = con.createStatement();
         	
-        		r = stmt.executeUpdate("insert into Prison_location" + "(P_id,Prison_location) value('"+
-        		P_id2+"','" +Prison_location+"')");
+        		r = stmt.executeUpdate("insert into Prison_location" + "(P_id,P_location,Name) value('"+
+        		P_id2+"','" +P_location+"','"+Name1+"')");
         		
         		if(r==1) {
         			
@@ -186,17 +204,20 @@ public class Db_connection{
         	    System.out.print("P_id:");
         		int P_id3 = Integer.parseInt(scan.nextLine());
         	
+        		System.out.print("Name:");
+        		String Name3 =scan.nextLine();
+        		
         		
         		System.out.print("C_id:");
         		int C_id3 = Integer.parseInt(scan.nextLine());
         		
         		System.out.print("Hours:");
-        		int Hours = Integer.parseInt(scan.nextLine());
+        	    String Hours = scan.nextLine();
         	
         	
         		stmt = con.createStatement();
         	
-        		r = stmt.executeUpdate("insert into Works" + "(P_id,C_id,Hours) value('"+P_id3+"','" +C_id3+"','"+Hours+"')");
+        		r = stmt.executeUpdate("insert into Works" + "(P_id,Name,C_id,Hours) value('"+P_id3+"','"+Name3+"','" +C_id3+"','"+Hours+"')");
         		
         		if(r==1) {
         			
@@ -216,7 +237,9 @@ public class Db_connection{
     	
     	}else if(num==2) {
     		
-    		System.out.println("수정항목: 1번 -> Criminal / 2번 -> Manager / 3번 -> Prison / 4번 -> Prison_location / 5번 -> Works");
+    		System.out.println("==================================수정======================================");
+    	    System.out.println("1번 Criminal || 2번 Manager || 3번 Prison || 4번 Prison_location || 5번 Works");
+    	    System.out.println("===========================================================================");
     	    int n = Integer.parseInt(scan.nextLine());
     	    
     	    switch(n) {
@@ -224,7 +247,7 @@ public class Db_connection{
     	    
     	    case 1: 
     	    	
-    	    	System.out.print("수정항목(예시:C_id=?): ");
+    	    	System.out.print("수정할 목(예시:C_id=?): ");
     	       String da = scan.nextLine();
     	        
     	    	System.out.print("수정 내용: ");
@@ -285,7 +308,9 @@ public class Db_connection{
     	    System.out.print("");
     	    search();
     	    
+    	
     	    break;
+    	   
     	    
     	    case 4: 
     	    	System.out.print("수정항목(예시:C_id=?): ");
@@ -336,7 +361,9 @@ public class Db_connection{
     	    
     	}else if(num==3){
     	    
-    		System.out.println("검색 항목: 1번 -> Criminal / 2번 -> Manager / 3번 -> Prison / 4번 -> Prison_location / 5번 -> Works");
+    		System.out.println("==================================검색======================================");
+    	    System.out.println("1번 Criminal || 2번 Manager || 3번 Prison || 4번 Prison_location || 5번 Works");
+    	    System.out.println("==========================================================================="); 
     	    int n = Integer.parseInt(scan.nextLine());
     		
     	
@@ -364,8 +391,10 @@ public class Db_connection{
     	       String Kind = rs.getString("Kind");
     	       String Period = rs.getString("Period");
     	       int M_id = rs.getInt("M_id");
+    	       String D_oi = rs.getString("D_oi");
+    	       int P_id = rs.getInt("P_id");
     	       
-    	       System.out.printf("%d %s %s %s %s %s %s %d",C_id,Fname,Lname,Address,Gender,Kind,Period,M_id);
+    	       System.out.printf("%d %s %s %s %s %s %s %d %s %d",C_id,Fname,Lname,Address,Gender,Kind,Period,M_id,D_oi,P_id);
     	       System.out.println("");
     	  
     	   }
@@ -416,11 +445,11 @@ public class Db_connection{
         		   
         		   int P_id = rs.getInt("P_id");
         		   String Name = rs.getString("Name");
-        	       String In_number = rs.getString("In_number");
-        	       String S_M_id = rs.getString("S_M_id");
+        	       int In_number = rs.getInt("In_number");
+        	       int S_M_id = rs.getInt("S_M_id");
+        	       int Re_number = rs.getInt("Re_number");
         	       
-        	       
-        	       System.out.printf("%d %s %s %s %d",P_id,Name,In_number,S_M_id);
+        	       System.out.printf("%d %s %d %d %d",P_id,Name,In_number,S_M_id,Re_number);
         	       System.out.println("");
         	  
         	   }
@@ -443,10 +472,11 @@ public class Db_connection{
         	   while(rs.next()) {
         		   
         		   int P_id = rs.getInt("P_id");
-        		   String Prison_location = rs.getString("Prison_location");
+        		   String Name= rs.getString("Name");
+        		   String P_location = rs.getString("P_location");
         	       
         	       
-        	       System.out.printf("%d %s",P_id,Prison_location);
+        	       System.out.printf("%d %s %s",P_id,Name,P_location);
         	       System.out.println("");
         	  
         	   }
@@ -469,12 +499,14 @@ public class Db_connection{
         	   while(rs.next()) {
         		   
         		   int P_id = rs.getInt("P_id");
-        	
+        		   
+        	       String Name = rs.getString("Name");
+        		   
         	       int C_id = rs.getInt("C_id");
         	       
-        	       int Hours= rs.getInt("Hours");
+        	       String Hours= rs.getString("Hours");
         	       
-        	       System.out.printf("%d %d %d",P_id,C_id,Hours);
+        	       System.out.printf("%d %s %d %s",P_id,Name,C_id,Hours);
         	       System.out.println("");
         	  
         	   }
@@ -489,7 +521,9 @@ public class Db_connection{
     	}else if(num == 4) {
     	    	
     		
-    		System.out.println("삭제 항목: 1번 -> Criminal / 2번 -> Manager / 3번 -> Prison / 4번 -> Prison_location / 5번 -> Works");
+    		System.out.println("==================================삭제======================================");
+    	    System.out.println("1번 Criminal || 2번 Manager || 3번 Prison || 4번 Prison_location || 5번 Works");
+    	    System.out.println("===========================================================================");
     	    int n = Integer.parseInt(scan.nextLine());
     		
           switch(n) {//
@@ -522,7 +556,7 @@ public class Db_connection{
     	        String cn1 = scan.nextLine();
     	        
     	        stmt = con.createStatement();
-    	        r= stmt.executeUpdate("delete from Manage where " +cn1);
+    	        r= stmt.executeUpdate("delete from Manager where " +cn1);
     	        
     	        if(r ==0) {
     	        	System.out.println("삭제할 내용을 찾을 수 없습니다.");
@@ -603,10 +637,217 @@ public class Db_connection{
     	        
     	    	
     	    }//
-    	   
-    
-    	 con.close();
+    	}else if(num==5) {
+    		
+    		System.out.println("==================================삭제======================================");
+    	    System.out.println("1번 Criminal || 2번 Manager || 3번 Prison || 4번 Prison_location || 5번 Works");
+    	    System.out.println("===========================================================================");
+    	    
+    		System.out.print("확인할 테이블 번호: ");
+    		int se = Integer.parseInt(scan.nextLine());
+ 	        
+ 	       switch(se) {
+ 	       
+ 	        case 1:
+ 	    	   
+ 	    	   
+ 	             stmt = con.createStatement();
+ 	             rs = stmt.executeQuery("select * from Criminal ");
+ 	             
+ 	             
+ 	            while(rs.next()) {
+ 	    		   
+ 	    		   int C_id = rs.getInt("C_id");
+ 	    		   String Fname = rs.getString("Fname");
+ 	    	       String Lname = rs.getString("Lname");
+ 	    	       String Address = rs.getString("Address");
+ 	    	       String Gender = rs.getString("Gender");
+ 	    	       String Kind = rs.getString("Kind");
+ 	    	       String Period = rs.getString("Period");
+ 	    	       int M_id = rs.getInt("M_id");
+ 	    	       String D_oi = rs.getString("D_oi");
+ 	    	       int P_id = rs.getInt("P_id");
+ 	    	       
+ 	    	       System.out.printf("%d %s %s %s %s %s %s %d %s %d",C_id,Fname,Lname,Address,Gender,Kind,Period,M_id,D_oi,P_id);
+ 	    	       System.out.println("");
+ 	    	  
+ 	    	   }
+ 	            break;
+ 	            
+ 	        case 2: 
+ 	        	
+ 	        	stmt = con.createStatement();
+ 	 	        rs = stmt.executeQuery("select * from Manager ");
+ 	 	        
+ 	 	      while(rs.next()) {
+       		   
+       		   int M_id = rs.getInt("M_id");
+       		   String Name = rs.getString("Name");
+       	       String M_kind = rs.getString("M_Kind");
+       	      
+       	       System.out.printf("%d %s %s",M_id,Name,M_kind);
+       	       System.out.println("");
+       	  
+       	   }
+ 	 	      break;
+ 	 	        
+ 	       case 3:
+ 	    	   
+	             stmt = con.createStatement();
+	             rs = stmt.executeQuery("select * from Prison ");
+	             
+	             while(rs.next()) {
+	        		   
+	        		   int P_id = rs.getInt("P_id");
+	        		   String Name = rs.getString("Name");
+	        	       int In_number = rs.getInt("In_number");
+	        	       int S_M_id = rs.getInt("S_M_id");
+	        	       int Re_number = rs.getInt("Re_number");
+	        	       
+	        	       System.out.printf("%d %s %d %d %d",P_id,Name,In_number,S_M_id,Re_number);
+	        	       System.out.println("");
+	        	  
+	        	   }
+	             break;
+	        
+	        case 4: 
+	        	
+	        	stmt = con.createStatement();
+	 	        rs = stmt.executeQuery("select * from Prison_location ");
+	 	        
+                   while(rs.next()) {
+        		   
+        		   int P_id = rs.getInt("P_id");
+        		   String Name= rs.getString("Name");
+        		   String P_location = rs.getString("P_location");
+        	       
+        	       
+        	       System.out.printf("%d %s %s",P_id,Name,P_location);
+        	       System.out.println("");
+        	  
+        	   }
+	 	        break;
+	 	        
+            case 5: 
+	        	
+	        	stmt = con.createStatement();
+	 	        rs = stmt.executeQuery("select * from Works ");
+	 	        
+                   while(rs.next()) {
+        		   
+        		   int P_id = rs.getInt("P_id");
+        		   
+        	       String Name = rs.getString("Name");
+        		   
+        	       int C_id = rs.getInt("C_id");
+        	       
+        	       String Hours= rs.getString("Hours");
+        	       
+        	       System.out.printf("%d %s %d %s",P_id,Name,C_id,Hours);
+        	       System.out.println("");
+        	  
+        	   }
+ 	       
+                   break;
+ 	       }
+ 	        
+ 	        System.out.println("");
+ 	        search();
+    		
+    	}else if(num==6) {
+    		
+    		
+    		stmt = con.createStatement();
+ 	        rs = stmt.executeQuery("select * from Prison, Prison_location where Prison.P_id = Prison_location.P_id");
+ 	       while(rs.next()) {
+    		   
+    		   int P_id = rs.getInt("P_id");
+    		   String Name = rs.getString("Name");
+    	       int In_number = rs.getInt("In_number");
+    	       int S_M_id = rs.getInt("S_M_id");
+    	       int Re_number = rs.getInt("Re_number");
+    	       String P_location = rs.getString("P_location");
+    	       
+    	      
+    	       System.out.printf("%d %s %d %d %d %s",P_id,Name,In_number,S_M_id,Re_number,P_location);
+    	       System.out.println("");
+    	  
+    	   }
+       
+ 	      System.out.println("");
+	     	search();
+    		
+    	}else if(num==7) {
+    		
+    		
+    		stmt = con.createStatement();
+ 	        rs = stmt.executeQuery("select * from Criminal,Prison where Prison.P_id = Criminal.P_id ");
+ 	       
+ 	    	  while(rs.next()) {
+ 	    		   
+ 	    		   int C_id = rs.getInt("C_id");
+ 	    		   String Fname = rs.getString("Fname");
+ 	    	       String Lname = rs.getString("Lname");
+ 	    	       String Address = rs.getString("Address");
+ 	    	       String Gender = rs.getString("Gender");
+ 	    	       String Kind = rs.getString("Kind");
+ 	    	       String Period = rs.getString("Period");
+ 	    	       int M_id = rs.getInt("M_id");
+ 	    	      
+ 	    	       String D_oi = rs.getString("D_oi");
+ 	    	       int P_id = rs.getInt("P_id");
+ 	    	      String Name = rs.getString("Name");
+ 	    	       int In_number = rs.getInt("In_number");
+ 	    	       int S_M_id = rs.getInt("S_M_id");
+ 	    	       int Re_number = rs.getInt("Re_number");
+ 	    	       
+ 	    	       System.out.printf("%d %s %s %s %s %s %s %d %s %d %s %d %d %d",C_id,Fname,Lname,Address,Gender,Kind,Period,M_id,D_oi,P_id,Name,In_number,S_M_id,Re_number);
+ 	    	       System.out.println("");
+ 	    	    
+    	   }
+
+ 	     	System.out.println("");
+ 	     	search();
+ 	     	
+ 	     	
+ 	    	
+    	}else if(num==7) {
+    		
+    		
+    		stmt = con.createStatement();
+ 	        rs = stmt.executeQuery("select * from Criminal,Prison,Manager where Prison.P_id = Criminal.P_id ");
+ 	       
+ 	    	  while(rs.next()) {
+ 	    		   
+ 	    		   int C_id = rs.getInt("C_id");
+ 	    		   String Fname = rs.getString("Fname");
+ 	    	       String Lname = rs.getString("Lname");
+ 	    	       String Address = rs.getString("Address");
+ 	    	       String Gender = rs.getString("Gender");
+ 	    	       String Kind = rs.getString("Kind");
+ 	    	       String Period = rs.getString("Period");
+ 	    	       int M_id = rs.getInt("M_id");
+ 	    	       String D_oi = rs.getString("D_oi");
+ 	    	       int P_id = rs.getInt("P_id");
+ 	    	      String Name = rs.getString("Name");
+ 	    	       int In_number = rs.getInt("In_number");
+ 	    	       int S_M_id = rs.getInt("S_M_id");
+ 	    	       int Re_number = rs.getInt("Re_number");
+ 	    	       
+ 	    	       System.out.printf("%d %s %s %s %s %s %s %d %s %d %s %d %d %d",C_id,Fname,Lname,Address,Gender,Kind,Period,M_id,D_oi,P_id,Name,In_number,S_M_id,Re_number);
+ 	    	       System.out.println("");
+ 	    	    
+    	   }
+
+ 	     	System.out.println("");
+ 	     	search();
+ 	     	
+ 	     	
+ 	    	
     	}
+    		
+      con.close();
+    	
     	
 	}catch(Exception e) {
 		System.out.println(e);
